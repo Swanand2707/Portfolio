@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swanand Mane | Python & Full-Stack Web Developer</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts (Inter & Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Typed.js for dynamic typing -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        darkbg: {
+                            base: '#020617',
+                            card: 'rgba(15, 23, 42, 0.75)',
+                            header: 'rgba(2, 6, 23, 0.85)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Glassmorphism & Animations */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.25);
+        }
+
+        .glow-effect {
+            box-shadow: 0 0 35px rgba(56, 189, 248, 0.35);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-950 text-slate-100 font-sans selection:bg-brand-500 selection:text-white relative overflow-x-hidden">
+
+    <!-- Background Gradient Accents -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <div class="fixed bottom-1/3 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-darkbg-header backdrop-blur-md border-b border-slate-800/60 transition-all duration-300" id="header">
+        <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#home" class="font-heading text-2xl font-bold tracking-tight text-white flex items-center gap-2 group">
+                <span class="text-brand-400 font-mono text-3xl">&lt;</span>
+                <span>Swanand<span class="text-brand-400">.</span></span>
+                <span class="text-brand-400 font-mono text-3xl">&gt;</span>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <ul class="hidden md:flex items-center gap-8 font-medium text-slate-300">
+                <li><a href="#home" class="hover:text-brand-400 transition-colors py-2">Home</a></li>
+                <li><a href="#about" class="hover:text-brand-400 transition-colors py-2">About</a></li>
+                <li><a href="#skills" class="hover:text-brand-400 transition-colors py-2">Skills</a></li>
+                <li><a href="#projects" class="hover:text-brand-400 transition-colors py-2">Projects</a></li>
+                <li><a href="#stats" class="hover:text-brand-400 transition-colors py-2">Stats</a></li>
+                <li><a href="#contact" class="hover:text-brand-400 transition-colors py-2">Contact</a></li>
+            </ul>
+
+            <!-- CTA Action Buttons -->
+            <div class="hidden md:flex items-center gap-4">
+                <button onclick="openModal('cvModal')" class="px-5 py-2.5 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-500 rounded-full transition-all shadow-lg shadow-brand-500/20 active:scale-95 flex items-center gap-2">
+                    <i class="fa-solid fa-file-arrow-down"></i> Resume
+                </button>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobileMenuBtn" class="md:hidden text-2xl text-slate-300 hover:text-white focus:outline-none" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars" id="menuIcon"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobileMenu" class="hidden md:hidden bg-slate-900/95 border-b border-slate-800 px-6 py-6 transition-all duration-300">
+            <ul class="flex flex-col gap-4 text-base font-medium">
+                <li><a href="#home" class="mobile-nav-link block text-slate-300 hover:text-brand-400">Home</a></li>
+                <li><a href="#about" class="mobile-nav-link block text-slate-300 hover:text-brand-400">About</a></li>
+                <li><a href="#skills" class="mobile-nav-link block text-slate-300 hover:text-brand-400">Skills</a></li>
+                <li><a href="#projects" class="mobile-nav-link block text-slate-300 hover:text-brand-400">Projects</a></li>
+                <li><a href="#stats" class="mobile-nav-link block text-slate-300 hover:text-brand-400">Stats</a></li>
+                <li><a href="#contact" class="mobile-nav-link block text-slate-300 hover:text-brand-400">Contact</a></li>
+            </ul>
+            <div class="mt-6 pt-6 border-t border-slate-800 flex flex-col gap-3">
+                <button onclick="openModal('cvModal')" class="w-full text-center py-2.5 text-sm font-semibold text-white bg-brand-600 rounded-full">
+                    <i class="fa-solid fa-file-arrow-down mr-2"></i> Download CV
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="min-h-screen pt-28 pb-16 flex items-center relative" id home>
+        <div class="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Text Content -->
+            <div class="lg:col-span-7 flex flex-col items-start space-y-6 text-left">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card text-brand-400 text-xs font-semibold tracking-wide uppercase border border-brand-400/20">
+                    <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
+                    Available For Projects & Internships
+                </div>
+
+                <h3 class="text-xl md:text-2xl font-medium text-slate-400">
+                    Hello, I'm <span class="text-white font-semibold">Swanand Mane</span>
+                </h3>
+
+                <h1 class="text-4xl sm:text-6xl font-extrabold font-heading text-white tracking-tight leading-tight">
+                    Building digital experiences with <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-indigo-400">code & precision.</span>
+                </h1>
+
+                <!-- Dynamic Typed Subtitle -->
+                <div class="text-2xl sm:text-3xl font-semibold text-slate-300 flex items-center gap-2 h-10">
+                    <span>I am a</span>
+                    <span class="typing text-brand-400 font-mono underline decoration-brand-500/40"></span>
+                </div>
+
+                <p class="text-slate-400 text-base sm:text-lg max-w-2xl leading-relaxed">
+                    Passionate Computer Science Engineering student specializing in scalable <strong class="text-slate-200">Python development</strong>, modern full-stack web engineering, algorithms, and intuitive user interface design.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center gap-4 pt-2">
+                    <a href="#contact" class="px-7 py-3.5 rounded-full font-semibold text-slate-950 bg-brand-400 hover:bg-sky-300 transition-all shadow-lg shadow-brand-400/25 transform hover:-translate-y-1">
+                        Get In Touch <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                    </a>
+                    <button onclick="openModal('cvModal')" class="px-7 py-3.5 rounded-full font-semibold text-white border border-slate-700 hover:border-brand-400 hover:text-brand-400 glass-card transition-all transform hover:-translate-y-1">
+                        View Resume <i class="fa-solid fa-eye ml-2 text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Social Handles -->
+                <div class="pt-6 flex items-center gap-4">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Connect:</span>
+                    <div class="flex items-center gap-3">
+                        <a href="https://github.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-slate-300 hover:text-brand-400 hover:border-brand-400/50 transition-all transform hover:-translate-y-1" title="GitHub">
+                            <i class="fa-brands fa-github text-lg"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-slate-300 hover:text-brand-400 hover:border-brand-400/50 transition-all transform hover:-translate-y-1" title="LinkedIn">
+                            <i class="fa-brands fa-linkedin-in text-lg"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-slate-300 hover:text-brand-400 hover:border-brand-400/50 transition-all transform hover:-translate-y-1" title="Instagram">
+                            <i class="fa-brands fa-instagram text-lg"></i>
+                        </a>
+                        <a href="https://x.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-slate-300 hover:text-brand-400 hover:border-brand-400/50 transition-all transform hover:-translate-y-1" title="Twitter / X">
+                            <i class="fa-brands fa-x-twitter text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Profile Avatar / Graphic -->
+            <div class="lg:col-span-5 flex justify-center items-center relative">
+                <div class="relative w-72 h-72 sm:w-88 sm:h-88 md:w-96 md:h-96">
+                    <!-- Glow ring backdrop -->
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-brand-500 to-indigo-600 opacity-30 blur-2xl animate-pulse"></div>
+                    
+                    <!-- Avatar Frame Container -->
+                    <div class="relative w-full h-full rounded-full p-2 bg-gradient-to-b from-brand-400/60 to-slate-800/80 animate-float glow-effect">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800" 
+                             alt="Swanand Mane Profile" 
+                             class="w-full h-full object-cover rounded-full border-4 border-slate-900 shadow-2xl"
+                             onerror="this.src='https://placehold.co/400x400/0f172a/38bdf8?text=SM';">
+                    </div>
+
+                    <!-- Floating Badge 1 -->
+                    <div class="absolute -bottom-2 -left-2 glass-card p-3 rounded-2xl flex items-center gap-3 border border-slate-700/80 shadow-xl">
+                        <div class="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center">
+                            <i class="fa-brands fa-python text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Core Stack</p>
+                            <p class="text-xs font-bold text-white">Python Dev</p>
+                        </div>
+                    </div>
+
+                    <!-- Floating Badge 2 -->
+                    <div class="absolute top-4 -right-2 glass-card p-3 rounded-2xl flex items-center gap-3 border border-slate-700/80 shadow-xl">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                            <i class="fa-solid fa-graduation-cap text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Education</p>
+                            <p class="text-xs font-bold text-white">CSE Engineer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= ABOUT SECTION ================= -->
+    <section class="py-24 relative border-t border-slate-800/50" id="about">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-brand-400 uppercase mb-2">Who I Am</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold font-heading text-white">About Me</h3>
+                <div class="w-16 h-1 bg-brand-400 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Box 1 -->
+                <div class="glass-card p-8 rounded-2xl transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-400 group-hover:text-slate-950 transition-colors">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">CSE Scholar</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Computer Science Engineering student at Kolhapur, focused on data structures, system architecture, and modern computer science fundamentals.
+                    </p>
+                </div>
+
+                <!-- Box 2 -->
+                <div class="glass-card p-8 rounded-2xl transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-400 group-hover:text-slate-950 transition-colors">
+                        <i class="fa-brands fa-python"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Python Developer</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Proficient in Python scripting, backend services, data structures, backend automation, and algorithmic problem solving.
+                    </p>
+                </div>
+
+                <!-- Box 3 -->
+                <div class="glass-card p-8 rounded-2xl transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-400 group-hover:text-slate-950 transition-colors">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Web Engineering</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Building responsive, accessible, dynamic applications with HTML5, CSS3, JavaScript ES6+, and modern frontend tools.
+                    </p>
+                </div>
+
+                <!-- Box 4 -->
+                <div class="glass-card p-8 rounded-2xl transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-400 group-hover:text-slate-950 transition-colors">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">UI/UX Designer</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Crafting clean design systems, user-centric interfaces, interactive wireframes, and responsive layout styling.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= SKILLS SECTION ================= -->
+    <section class="py-24 relative bg-slate-900/40 border-t border-slate-800/50" id="skills">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-brand-400 uppercase mb-2">Capabilities</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold font-heading text-white">Technical Stack</h3>
+                <div class="w-16 h-1 bg-brand-400 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Skills Grid with Progress -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Python -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-brands fa-python text-3xl text-sky-400"></i>
+                                <h4 class="font-bold text-lg text-white">Python</h4>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-brand-400">90%</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">OOP, Scripting, Automation, Data Structures</p>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-brand-500 to-sky-400 h-2 rounded-full" style="width: 90%"></div>
+                    </div>
+                </div>
+
+                <!-- JavaScript -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-brands fa-js text-3xl text-amber-400"></i>
+                                <h4 class="font-bold text-lg text-white">JavaScript</h4>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-brand-400">85%</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">ES6+, Async JS, DOM Manipulation, APIs</p>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-brand-500 to-sky-400 h-2 rounded-full" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <!-- HTML5 & CSS3 -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-brands fa-html5 text-3xl text-orange-500"></i>
+                                <h4 class="font-bold text-lg text-white">HTML5 / CSS3</h4>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-brand-400">95%</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">Semantic Markup, Flexbox, CSS Grid, Tailwind</p>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-brand-500 to-sky-400 h-2 rounded-full" style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <!-- SQL & Databases -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-database text-3xl text-emerald-400"></i>
+                                <h4 class="font-bold text-lg text-white">SQL / MySQL</h4>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-brand-400">80%</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">Relational Queries, Schema Design, Joins</p>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-brand-500 to-sky-400 h-2 rounded-full" style="width: 80%"></div>
+                    </div>
+                </div>
+
+                <!-- Git & GitHub -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-brands fa-git-alt text-3xl text-rose-500"></i>
+                                <h4 class="font-bold text-lg text-white">Git & GitHub</h4>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-brand-400">85%</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">Version Control, Branching, Collaboration</p>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-brand-500 to-sky-400 h-2 rounded-full" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <!-- UI/UX Styling -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-wand-magic-sparkles text-3xl text-purple-400"></i>
+                                <h4 class="font-bold text-lg text-white">UI/UX Design</h4>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-brand-400">88%</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">Figma Basics, Responsive Layouts, Glassmorphism</p>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-brand-500 to-sky-400 h-2 rounded-full" style="width: 88%"></div>
+                    </div>
+                </div>
+
+                <!-- Web Tech / React -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-brands fa-react text-3xl text-cyan-400"></i>
+                                <h4 class="font-bold text-lg text-white">React Tech</h4>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-brand-400">75%</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">Component Architecture, Hooks, State Management</p>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-brand-500 to-sky-400 h-2 rounded-full" style="width: 75%"></div>
+                    </div>
+                </div>
+
+                <!-- Linux & Tools -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-brands fa-linux text-3xl text-amber-200"></i>
+                                <h4 class="font-bold text-lg text-white">Dev Tools</h4>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-brand-400">82%</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">VS Code, CLI Tools, Linux Environment</p>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-brand-500 to-sky-400 h-2 rounded-full" style="width: 82%"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PROJECTS SECTION ================= -->
+    <section class="py-24 relative border-t border-slate-800/50" id="projects">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-bold tracking-widest text-brand-400 uppercase mb-2">Portfolio</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold font-heading text-white">Featured Projects</h3>
+                <div class="w-16 h-1 bg-brand-400 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Filter Categories Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+                <button onclick="filterProjects('all')" class="project-filter-btn active-filter px-5 py-2 rounded-full text-xs font-semibold border border-brand-400 bg-brand-400 text-slate-950 transition-all">
+                    All Projects
+                </button>
+                <button onclick="filterProjects('python')" class="project-filter-btn px-5 py-2 rounded-full text-xs font-semibold border border-slate-700 bg-slate-900 text-slate-300 hover:border-brand-400 hover:text-white transition-all">
+                    Python
+                </button>
+                <button onclick="filterProjects('web')" class="project-filter-btn px-5 py-2 rounded-full text-xs font-semibold border border-slate-700 bg-slate-900 text-slate-300 hover:border-brand-400 hover:text-white transition-all">
+                    Web Development
+                </button>
+                <button onclick="filterProjects('ui')" class="project-filter-btn px-5 py-2 rounded-full text-xs font-semibold border border-slate-700 bg-slate-900 text-slate-300 hover:border-brand-400 hover:text-white transition-all">
+                    UI/UX Design
+                </button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projectsGrid">
+                
+                <!-- Project Card 1 (Python) -->
+                <div class="project-card glass-card rounded-2xl overflow-hidden flex flex-col group transition-all duration-300" data-category="python">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600" 
+                             alt="Python Automation Suite" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                            <button onclick="openProjectModal('Python Automation Suite', 'Engineered an automated data extraction and analytics script using Python, Pandas, and OpenPyXL for automated workflow generation.', ['Python', 'Pandas', 'CLI', 'SQL'])" class="w-10 h-10 rounded-full bg-brand-400 text-slate-950 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-500/20 text-brand-400 uppercase">Python</span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-2 group-hover:text-brand-400 transition-colors">Python Automation & Analytics</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Script suite for scraping, processing, and generating structured reports automatically with zero manual effort.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 pt-4 border-t border-slate-800 text-xs font-mono text-slate-400">
+                            <span>#python</span> <span>#pandas</span> <span>#automation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 (Web) -->
+                <div class="project-card glass-card rounded-2xl overflow-hidden flex flex-col group transition-all duration-300" data-category="web">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600" 
+                             alt="Portfolio Website" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                            <button onclick="openProjectModal('Modern Developer Portfolio', 'Fully responsive single-page web app built with Tailwind CSS, JS animations, and dynamic interactive elements.', ['HTML5', 'CSS3', 'JavaScript', 'Tailwind'])" class="w-10 h-10 rounded-full bg-brand-400 text-slate-950 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-400 uppercase">Web Dev</span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-2 group-hover:text-brand-400 transition-colors">Interactive Web Portfolio</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Modern, sleek glassmorphism portfolio application showcasing engineering accomplishments and interactive features.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 pt-4 border-t border-slate-800 text-xs font-mono text-slate-400">
+                            <span>#tailwind</span> <span>#javascript</span> <span>#responsive</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 (Python / Web Backend) -->
+                <div class="project-card glass-card rounded-2xl overflow-hidden flex flex-col group transition-all duration-300" data-category="python">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600" 
+                             alt="Student Management System" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                            <button onclick="openProjectModal('Student Management System', 'A database-backed management solution written in Python connected to SQLite/MySQL database for academic tracking.', ['Python', 'MySQL', 'Tkinter/Flask'])" class="w-10 h-10 rounded-full bg-brand-400 text-slate-950 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 uppercase">Python & Database</span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-2 group-hover:text-brand-400 transition-colors">Student Management System</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Database-backed management desktop app with CRUD functionality, record querying, and data persistence.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 pt-4 border-t border-slate-800 text-xs font-mono text-slate-400">
+                            <span>#python</span> <span>#sql</span> <span>#crud</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 (UI/UX & Web) -->
+                <div class="project-card glass-card rounded-2xl overflow-hidden flex flex-col group transition-all duration-300" data-category="ui">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=600" 
+                             alt="Smart Task Dashboard" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                            <button onclick="openProjectModal('Smart Workflow Dashboard', 'Clean intuitive user interface design for productivity tracking, task prioritization, and task workflow visualization.', ['Figma', 'UI/UX', 'CSS Grid'])" class="w-10 h-10 rounded-full bg-brand-400 text-slate-950 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-400 uppercase">UI/UX Design</span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-2 group-hover:text-brand-400 transition-colors">Smart Workflow Dashboard</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                                Interactive task management design focusing on sleek dark theme UI patterns and minimalist layout.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 pt-4 border-t border-slate-800 text-xs font-mono text-slate-400">
+                            <span>#uiux</span> <span>#dashboard</span> <span>#design</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= STATS SECTION ================= -->
+    <section class="py-20 bg-slate-900/60 border-t border-b border-slate-800/60" id="stats">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+                
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="text-4xl sm:text-5xl font-extrabold font-heading text-brand-400 mb-2 flex items-center justify-center">
+                        <span class="counter" data-target="15">0</span><span>+</span>
+                    </div>
+                    <p class="text-slate-300 font-semibold">Projects Built</p>
+                    <p class="text-xs text-slate-500 mt-1">Python Scripts & Web Apps</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="text-4xl sm:text-5xl font-extrabold font-heading text-brand-400 mb-2 flex items-center justify-center">
+                        <span class="counter" data-target="8">0</span><span>+</span>
+                    </div>
+                    <p class="text-slate-300 font-semibold">Technologies Mastered</p>
+                    <p class="text-xs text-slate-500 mt-1">Languages, Frameworks & DBs</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="text-4xl sm:text-5xl font-extrabold font-heading text-brand-400 mb-2 flex items-center justify-center">
+                        <span class="counter" data-target="100">0</span><span>%</span>
+                    </div>
+                    <p class="text-slate-300 font-semibold">Coding Dedication</p>
+                    <p class="text-xs text-slate-500 mt-1">Continuous Learning & Growth</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= CONTACT SECTION ================= -->
+    <section class="py-24 relative border-b border-slate-800/50" id="contact">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-brand-400 uppercase mb-2">Get In Touch</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold font-heading text-white">Contact Me</h3>
+                <div class="w-16 h-1 bg-brand-400 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Contact Information Column -->
+                <div class="lg:col-span-5 space-y-6">
+                    <h4 class="text-2xl font-bold text-white mb-4">Let's talk about your project or opportunity!</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                        I am open to software development internships, freelance web projects, and Python programming opportunities. Feel free to reach out directly.
+                    </p>
+
+                    <!-- Contact Detail Cards -->
+                    <div class="glass-card p-5 rounded-xl flex items-center gap-4 hover:border-brand-400/50 transition-colors">
+                        <div class="w-12 h-12 rounded-lg bg-brand-500/10 text-brand-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-medium">Email Me Directly</p>
+                            <button onclick="copyToClipboard('swanandmane2007@gmail.com')" class="text-white font-semibold hover:text-brand-400 transition-colors text-left flex items-center gap-2">
+                                swanandmane2007@gmail.com <i class="fa-regular fa-copy text-xs text-slate-400" title="Click to copy"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-xl flex items-center gap-4 hover:border-brand-400/50 transition-colors">
+                        <div class="w-12 h-12 rounded-lg bg-brand-500/10 text-brand-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-medium">Location</p>
+                            <p class="text-white font-semibold">Kolhapur, Maharashtra, India</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-xl flex items-center gap-4 hover:border-brand-400/50 transition-colors">
+                        <div class="w-12 h-12 rounded-lg bg-brand-500/10 text-brand-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-medium">Status</p>
+                            <p class="text-white font-semibold">Computer Science Engineering Student</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Form Column -->
+                <div class="lg:col-span-7">
+                    <form id="contactForm" onsubmit="handleFormSubmit(event)" class="glass-card p-8 rounded-2xl space-y-6">
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2" for="name">Your Name</label>
+                                <input type="text" id="name" required placeholder="John Doe" 
+                                       class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-brand-400 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2" for="email">Your Email</label>
+                                <input type="email" id="email" required placeholder="john@example.com" 
+                                       class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-brand-400 transition-colors">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2" for="subject">Subject</label>
+                            <input type="text" id="subject" required placeholder="Project Inquiry / Job Opportunity" 
+                                   class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-brand-400 transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2" for="message">Message</label>
+                            <textarea id="message" rows="4" required placeholder="Write your message here..." 
+                                      class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-brand-400 transition-colors resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="w-full py-3.5 rounded-xl font-semibold text-slate-950 bg-brand-400 hover:bg-sky-300 transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-400/20">
+                            <span>Send Message</span> <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="py-8 bg-slate-950 text-slate-500 text-sm">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 <span class="text-white font-semibold">Swanand Mane</span>. All Rights Reserved.</p>
+            <div class="flex items-center gap-6 text-xs">
+                <a href="#home" class="hover:text-brand-400 transition-colors">Home</a>
+                <a href="#about" class="hover:text-brand-400 transition-colors">About</a>
+                <a href="#projects" class="hover:text-brand-400 transition-colors">Projects</a>
+                <a href="#contact" class="hover:text-brand-400 transition-colors">Contact</a>
+            </div>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-9 h-9 rounded-full bg-slate-900 border border-slate-800 text-slate-400 hover:text-brand-400 hover:border-brand-400 flex items-center justify-center transition-all" title="Back to top">
+                <i class="fa-solid fa-arrow-up text-xs"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- ================= MODALS ================= -->
+    
+    <!-- Resume View Modal -->
+    <div id="cvModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-card bg-slate-900 max-w-2xl w-full rounded-2xl p-6 relative border border-slate-700 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('cvModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Swanand Mane - Resume</h3>
+                    <p class="text-xs text-slate-400">Computer Science Engineering Student & Python Developer</p>
+                </div>
+            </div>
+
+            <!-- Resume Content Preview -->
+            <div class="space-y-4 text-sm text-slate-300 border-t border-b border-slate-800 py-4 my-4">
+                <div>
+                    <h4 class="font-bold text-brand-400 uppercase text-xs tracking-wider">Education</h4>
+                    <p class="font-semibold text-white">B.E. in Computer Science Engineering</p>
+                    <p class="text-xs text-slate-400">Kolhapur, Maharashtra, India</p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-brand-400 uppercase text-xs tracking-wider">Core Skills</h4>
+                    <p class="text-xs text-slate-300">Python, JavaScript, HTML5, CSS3, SQL/MySQL, UI/UX Design, Git, Algorithms</p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-brand-400 uppercase text-xs tracking-wider">Summary</h4>
+                    <p class="text-xs text-slate-400">Motivated developer passionate about building clean Python backend scripts, interactive websites, and intuitive UI components with modern engineering standards.</p>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button onclick="downloadCV()" class="px-5 py-2.5 rounded-xl font-semibold text-slate-950 bg-brand-400 hover:bg-sky-300 text-xs flex items-center gap-2">
+                    <i class="fa-solid fa-download"></i> Download CV File
+                </button>
+                <button onclick="closeModal('cvModal')" class="px-5 py-2.5 rounded-xl font-semibold text-slate-300 border border-slate-700 hover:bg-slate-800 text-xs">
+                    Close Preview
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generic Project Details Modal -->
+    <div id="projectModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-card bg-slate-900 max-w-lg w-full rounded-2xl p-6 relative border border-slate-700">
+            <button onclick="closeModal('projectModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 id="modalProjectTitle" class="text-2xl font-bold text-white mb-3">Project Details</h3>
+            <p id="modalProjectDesc" class="text-slate-300 text-sm leading-relaxed mb-6"></p>
+
+            <div class="mb-6">
+                <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Tech Stack Used</h4>
+                <div id="modalProjectTags" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3">
+                <button onclick="closeModal('projectModal')" class="px-5 py-2 rounded-xl font-semibold text-slate-300 border border-slate-700 text-xs">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 hidden glass-card border border-brand-400/50 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-brand-400"></i>
+        <span id="toastMsg" class="text-sm font-medium">Message sent!</span>
+    </div>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // 1. Dynamic Typing Effect Init
+        document.addEventListener("DOMContentLoaded", function () {
+            if (window.Typed) {
+                new Typed(".typing", {
+                    strings: [
+                        "Web Developer",
+                        "Python Developer",
+                        "CSE Student",
+                        "UI/UX Designer"
+                    ],
+                    typeSpeed: 70,
+                    backSpeed: 40,
+                    loop: true
+                });
+            }
+        });
+
+        // 2. Mobile Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const menuIcon = document.getElementById("menuIcon");
+
+        mobileMenuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+            if (mobileMenu.classList.contains("hidden")) {
+                menuIcon.className = "fa-solid fa-bars";
+            } else {
+                menuIcon.className = "fa-solid fa-xmark";
+            }
+        });
+
+        document.querySelectorAll(".mobile-nav-link").forEach(link => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.add("hidden");
+                menuIcon.className = "fa-solid fa-bars";
+            });
+        });
+
+        // 3. Project Filter System
+        function filterProjects(category) {
+            const cards = document.querySelectorAll(".project-card");
+            const filterBtns = document.querySelectorAll(".project-filter-btn");
+
+            filterBtns.forEach(btn => {
+                btn.classList.remove("active-filter", "border-brand-400", "bg-brand-400", "text-slate-950");
+                btn.classList.add("border-slate-700", "bg-slate-900", "text-slate-300");
+            });
+
+            event.target.classList.add("active-filter", "border-brand-400", "bg-brand-400", "text-slate-950");
+            event.target.classList.remove("border-slate-700", "bg-slate-900", "text-slate-300");
+
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute("data-category");
+                if (category === "all" || cardCategory === category) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        // 4. Modal Functions
+        function openModal(id) {
+            document.getElementById(id).classList.remove("hidden");
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add("hidden");
+        }
+
+        function openProjectModal(title, description, tags) {
+            document.getElementById("modalProjectTitle").innerText = title;
+            document.getElementById("modalProjectDesc").innerText = description;
+            
+            const tagsContainer = document.getElementById("modalProjectTags");
+            tagsContainer.innerHTML = "";
+            tags.forEach(tag => {
+                const span = document.createElement("span");
+                span.className = "px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-brand-500/20 text-brand-400";
+                span.innerText = "#" + tag;
+                tagsContainer.appendChild(span);
+            });
+
+            openModal("projectModal");
+        }
+
+        // 5. Contact Form Submission Handling
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById("submitBtn");
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span>Sending...</span> <i class="fa-solid fa-circle-notch animate-spin text-xs"></i>`;
+
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<span>Send Message</span> <i class="fa-solid fa-paper-plane text-xs"></i>`;
+                document.getElementById("contactForm").reset();
+                showToast("Message sent successfully! I'll reply soon.");
+            }, 1200);
+        }
+
+        // 6. Copy Email Utility Function using standard clipboard fallback
+        function copyToClipboard(text) {
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            showToast("Copied email to clipboard!");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toastMsg").innerText = msg;
+            toast.classList.remove("hidden");
+            setTimeout(() => {
+                toast.classList.add("hidden");
+            }, 3000);
+        }
+
+        // 7. Download Simulated CV File
+        function downloadCV() {
+            const cvContent = `SWANAND MANE
+Computer Science Engineering Student | Python & Web Developer
+Email: swanandmane2007@gmail.com
+Location: Kolhapur, Maharashtra, India
+
+SUMMARY:
+Passionate CSE student specializing in Python development, web engineering, algorithms, and UI design.
+
+SKILLS:
+- Python, JavaScript, HTML5, CSS3, SQL
+- UI/UX Styling, Git/GitHub, Problem Solving
+
+PROJECTS:
+- Python Automation & Analytics Suite
+- Student Management System
+- Interactive Web Portfolio
+`;
+            const blob = new Blob([cvContent], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "Swanand_Mane_CV.txt";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("Resume download started!");
+        }
+
+        // 8. Animated Stats Counters on Scroll
+        let animatedStats = false;
+        window.addEventListener("scroll", () => {
+            const statsSection = document.getElementById("stats");
+            if (!statsSection) return;
+            const rect = statsSection.getBoundingClientRect();
+            if (rect.top <= window.innerHeight && !animatedStats) {
+                animatedStats = true;
+                document.querySelectorAll(".counter").forEach(counter => {
+                    const target = +counter.getAttribute("data-target");
+                    let count = 0;
+                    const increment = Math.ceil(target / 40);
+                    const updateCount = () => {
+                        count += increment;
+                        if (count < target) {
+                            counter.innerText = count;
+                            setTimeout(updateCount, 30);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    updateCount();
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
